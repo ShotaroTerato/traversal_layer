@@ -5,13 +5,17 @@ project(traversal_layer)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  pcl_conversions
+  pcl_ros
   cv_bridge
   filters
   nav_msgs
   roscpp
   sensor_msgs
   tf
+  cmake_modules
 )
+find_package(Eigen REQUIRED)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -118,6 +122,8 @@ catkin_package(
 # include_directories(include)
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${Eigen_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -131,17 +137,20 @@ include_directories(
 # add_dependencies(traversal_layer ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ executable
-# add_executable(traversal_layer_node src/traversal_layer_node.cpp)
+add_executable(image_publisher src/image_publisher.cpp)
+add_executable(traversal_layer src/traversal_layer.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
 # add_dependencies(traversal_layer_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(traversal_layer_node
-#   ${catkin_LIBRARIES}
-# )
-
+target_link_libraries(image_publisher
+ ${catkin_LIBRARIES}
+)
+target_link_libraries(traversal_layer
+ ${catkin_LIBRARIES}
+)
 #############
 ## Install ##
 #############
