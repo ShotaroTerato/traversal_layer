@@ -20,7 +20,7 @@ class Filter{
 public:
   Filter(){
   point_cloud_sub = nh.subscribe("/grid_map_visualization/elevation_points", 1, &Filter::filterCallBack, this);
-  pub = nh.advertise<sensor_msgs::PointCloud2> ("/traversal_cloud", 4000, 1);
+  pub = nh.advertise<sensor_msgs::PointCloud2> ("/untraversal_cloud", 400, 1);
   ros::Rate loop_rate(10);
 }
 
@@ -43,7 +43,7 @@ private:
     pcl::PassThrough<pcl::PointXYZ> z_pass;
     z_pass.setInputCloud(pcl_cloud_in);
     z_pass.setFilterFieldName("z");
-    z_pass.setFilterLimits(-0.5, -0.2);
+    z_pass.setFilterLimits(-0.5, 0.1);
     z_pass.filter(*pcl_cloud_out);
 
     pcl::toROSMsg(*pcl_cloud_out, cloud_out);
