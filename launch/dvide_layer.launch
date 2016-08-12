@@ -9,13 +9,14 @@
   <node pkg="grid_map_visualization" type="grid_map_visualization" name="grid_map_visualization" output="screen" />
 
   <!-- Launch RViz with the demo configuration -->
-  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find grid_map_demos)/rviz/grid_map_demo.rviz" />
+  <!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(find grid_map_demos)/rviz/grid_map_demo.rviz" />-->
 
   <node pkg="traversal_layer" type="traversal_layer" name="traversal_layer"/>
 
   <node pkg="octomap_server" type="octomap_server_node" name="octomap" output="screen">
     <param name="resolution" value="0.05"/>
     <param name="frame_id" value="/map"/>
+    <param name="base_frame_id" value="/base_link"/>
     <remap from="/cloud_in" to="/untraversal_cloud"/>
     <remap from="/projected_map" to="/map_for_costmap"/>
   </node>
