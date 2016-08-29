@@ -20,9 +20,17 @@ int main(int argc, char** argv)
   cv::Mat rot_cv_image;
   cv::warpAffine(cv_image, rot_cv_image, affine_matrix, cv_image.size());
 
+  int origin_x, origin_y, cut_x, cut_y;
+  origin_x = rot_cv_image.cols*0.5-cv_image.rows*0.5;
+  origin_y = 0;
+  cut_x = cv_image.rows;
+  cut_y = cv_image.rows;
+  cv::Rect rect(origin_x, origin_y, cut_y, cut_x);
+  cv::Mat cut_image(rot_cv_image, rect);
+
   cv_bridge::CvImage out_image;
   out_image.encoding = "bgr8";
-  out_image.image = rot_cv_image;
+  out_image.image = cut_image;
 
   sensor_msgs::Image ros_image;
   out_image.toImageMsg(ros_image);
