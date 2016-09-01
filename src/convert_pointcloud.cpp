@@ -9,7 +9,6 @@
 #include <pcl/point_types.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl/PCLPointCloud2.h>
-#include <pcl/features/normal_3d.h>
 #include <pcl/filters/voxel_grid.h>
 #include <pcl/filters/passthrough.h>
 #include <pcl_ros/point_cloud.h>
@@ -18,18 +17,28 @@
 #include <tf/transform_listener.h>
 #include <tf/transform_broadcaster.h>
 
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/core/core.hpp>
+#include <cv_bridge/cv_bridge.h>
+#include <sensor_msgs/image_encodings.h>
+#include <tf/transform_broadcaster.h>
+#include <sensor_msgs/image_encodings.h>
+
 class ConvertPC{
 public:
   ConvertPC(){
   point_cloud_sub = nh.subscribe("/cloud_pcd", 1, &ConvertPC::ConvertPCCallBack, this);
-  pub = nh.advertise<sensor_msgs::PointCloud2> ("/pointcloud_rgb", 400, 1);
+  pub_cloud = nh.advertise<sensor_msgs::PointCloud2> ("/pointcloud_rgb", 400, 1);
+  pub_image = nh.advertise<sensor_msgs::Image> ("/cloud_image", 1);
   ros::Rate loop_rate(10);
 }
 
 private:
   ros::NodeHandle nh;
   ros::Subscriber point_cloud_sub;
-  ros::Publisher pub;
+  ros::Publisher pub_cloud;
+  ros::Publisher pub_image;
   sensor_msgs::PointCloud2 cloud_in;
   sensor_msgs::PointCloud2 cloud_out;
 
@@ -67,11 +76,36 @@ private:
       pcl_cloud_xyzrgb->points[j].b = normalize_num;
     }
 
+    pcl_cloud_xyzrgb->height = 1984;
+    pcl_cloud_xyzrgb->width = 1984;
+    cv::Mat cloud_image;
+    cloud_image = cv::Mat(pcl_cloud_xyzrgb->height, pcl_cloud_xyzrgb->width, CV_8UC3);
+    ROS_INFO("height = %d, width = %d", pcl_cloud_xyzrgb->height, pcl_cloud_xyzrgb->width);
+    ROS_INFO("rows = %d, cols = %d", cloud_image.rows, cloud_image.cols);
+    for(int h=0; h<cloud_image.rows; h++){
+      for(int w=0; w<cloud_image.cols; w++){
+        pcl::PointXYZRGB point = pcl_cloud_xyzrgb->at(w, h);
+        Eigen::Vector3i rgb = point.getRGBVector3i();
+        cloud_image.at<cv::Vec3b>(h,w)[0] = rgb[2];
+        cloud_image.at<cv::Vec3b>(h,w)[1] = rgb[1];
+        cloud_image.at<cv::Vec3b>(h,w)[2] = rgb[0];
+      }
+    }
+
+    cv_bridge::CvImage out_image;
+    out_image.encoding = "bgr8";
+    out_image.image = cloud_image;
+
+    sensor_msgs::Image ros_image;
+    out_image.toImageMsg(ros_image);
+    ros_image.header.frame_id = "/map";
+
     pcl::toROSMsg(*pcl_cloud_xyzrgb, cloud_out);
 
     cloud_out.header = cloud_in.header;
 
-    pub.publish(cloud_out);
+    pub_cloud.publish(cloud_out);
+    pub_image.publish(ros_image);
   }
 };
 
