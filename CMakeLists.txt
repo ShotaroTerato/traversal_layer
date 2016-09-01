@@ -139,6 +139,7 @@ include_directories(
 ## Declare a C++ executable
 add_executable(image_publisher src/image_publisher.cpp)
 add_executable(traversal_layer src/traversal_layer.cpp)
+add_executable(convert_pointcloud src/convert_pointcloud.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
@@ -149,6 +150,9 @@ target_link_libraries(image_publisher
  ${catkin_LIBRARIES}
 )
 target_link_libraries(traversal_layer
+ ${catkin_LIBRARIES}
+)
+target_link_libraries(convert_pointcloud
  ${catkin_LIBRARIES}
 )
 #############
