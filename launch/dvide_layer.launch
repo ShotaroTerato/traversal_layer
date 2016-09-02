@@ -3,13 +3,10 @@
 <launch>
   <node pkg="traversal_layer" type="image_publisher" name="image_publisher"/>
 
-  <rosparam command="load" file="$(find grid_map_demos)/config/image_to_gridmap_demo.yaml" />
+  <rosparam command="load" file="$(find traversal_layer)/config/image_to_gridmap_demo.yaml" />
   <node pkg="grid_map_demos" type="image_to_gridmap_demo" name="image_to_gridmap_demo" output="screen" />
   <!-- Launch the grid map visualizer -->
   <node pkg="grid_map_visualization" type="grid_map_visualization" name="grid_map_visualization" output="screen" />
-
-  <!-- Launch RViz with the demo configuration -->
-  <!--<node name="rviz" pkg="rviz" type="rviz" args="-d $(find grid_map_demos)/rviz/grid_map_demo.rviz" />-->
 
   <node pkg="traversal_layer" type="traversal_layer" name="traversal_layer"/>
 

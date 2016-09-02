@@ -1,0 +1,31 @@
+image_to_gridmap_demo:
+  image_topic: "/map_image"
+  resolution: 0.05
+  map_frame_id: "map"
+  min_height: -0.25
+  max_height: 0.25
+
+grid_map_visualization:
+  grid_map_topic: /image_to_gridmap_demo/grid_map
+  grid_map_visualizations:
+    - name: elevation_points
+      type: point_cloud
+      params:
+        layer: elevation
+    - name: elevation_grid
+      type: occupancy_grid
+      params:
+        layer: elevation
+        data_min: -0.5
+        data_max: -0.2
+    - name: flat_grid
+      type: flat_point_cloud
+      params:
+        height: -0.06
+
+    - name: elevation_cells
+      type: grid_cells
+      params:
+       layer: elevation
+       lower_threshold: -0.5
+       upper_threshold: 0
