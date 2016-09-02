@@ -51,20 +51,20 @@ private:
 
     pcl::fromROSMsg(cloud_in, *pcl_cloud_xyzi);
 
-    int i_max = 0;
-    int i_min = 0;
+    float i_max = 1.0;
+    float i_min = 0.0;
     int max = 255;
     int min = 0;
 
     for(int i=0; i<pcl_cloud_xyzi->points.size(); i++){
       if(pcl_cloud_xyzi->points[i].intensity>=i_max){
-        i_max = pcl_cloud_xyzi->points[i].intensity;
+        pcl_cloud_xyzi->points[i].intensity = 1.0;
       }
       if(pcl_cloud_xyzi->points[i].intensity<=i_min){
-        i_min = pcl_cloud_xyzi->points[i].intensity;
+        pcl_cloud_xyzi->points[i].intensity = 0.0;
       }
     }
-
+    ROS_INFO("max intensity = %f, \n min intensity = %f", i_max, i_min);
     int i_range = abs(i_max - i_min);
     int range = abs(max - min);
 
