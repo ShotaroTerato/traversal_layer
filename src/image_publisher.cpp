@@ -13,7 +13,8 @@ int main(int argc, char** argv)
   ros::NodeHandle nh;
 
   cv::Mat cv_image;
-  cv_image = cv::imread("/home/tera/catkin_ws/src/traversal_layer/maps/mymap_for_costmap.png",CV_LOAD_IMAGE_COLOR);
+  //cv_image = cv::imread("/home/tera/catkin_ws/src/traversal_layer/maps/mymap_for_costmap.png",CV_LOAD_IMAGE_COLOR);
+  cv_image = cv::imread("/home/tera/catkin_ws/src/traversal_layer/maps/gaisyuu_for_costmap_edit.png",CV_LOAD_IMAGE_COLOR);
   float angle = 90, scale = 1.0;
   cv::Point2f center(cv_image.cols*0.5, cv_image.rows*0.5);
   const cv::Mat affine_matrix = cv::getRotationMatrix2D(center, angle, scale);

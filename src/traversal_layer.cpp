@@ -45,7 +45,7 @@ private:
     pcl::PassThrough<pcl::PointXYZ> z_pass;
     z_pass.setInputCloud(pcl_cloud_in);
     z_pass.setFilterFieldName("z");
-    z_pass.setFilterLimits(-0.5, 0.1);
+    z_pass.setFilterLimits(-1.0, -0.03);
     z_pass.filter(*pcl_cloud_out);
 
     pcl::toROSMsg(*pcl_cloud_out, cloud_out);
