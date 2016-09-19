@@ -11,7 +11,7 @@
   <node pkg="traversal_layer" type="traversal_layer" name="traversal_layer"/>
 
   <node pkg="octomap_server" type="octomap_server_node" name="octomap" output="screen">
-    <param name="resolution" value="0.05"/>
+    <param name="resolution" value="0.1"/>
     <param name="frame_id" value="/map"/>
     <param name="base_frame_id" value="/base_link"/>
     <remap from="/cloud_in" to="/untraversal_cloud"/>
