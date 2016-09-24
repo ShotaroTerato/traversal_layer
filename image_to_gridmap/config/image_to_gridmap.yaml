@@ -1,4 +1,4 @@
-image_to_gridmap:
+image_to_gridmap_demo:
   image_topic: "/map_image"
   resolution: 0.10
   map_frame_id: "map"
@@ -6,7 +6,7 @@ image_to_gridmap:
   max_height: 0.0
 
 grid_map_visualization:
-  grid_map_topic: /image_to_gridmap/grid_map
+  grid_map_topic: /image_to_gridmap_demo/grid_map
   grid_map_visualizations:
     - name: elevation_points
       type: point_cloud
