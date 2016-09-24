@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>traversal_filter</name>
+  <name>image_publisher</name>
   <version>0.0.0</version>
-  <description>The traversal_filter package</description>
+  <description>The image_publisher package</description>
 
   <maintainer email="tera@todo.todo">tera</maintainer>
 

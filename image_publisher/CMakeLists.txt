@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 2.8.3)
-project(image_to_gridmap)
-add_definitions(-std=c++11)
+project(image_publisher)
 
 find_package(catkin REQUIRED COMPONENTS
   pcl_conversions
@@ -28,9 +27,9 @@ include_directories(
 )
 
 ## Declare a C++ executable
-add_executable(image_to_gridmap src/image_to_gridmap.cpp src/ImageToGridmap.cpp)
+add_executable(image_publisher src/image_publisher.cpp)
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(image_to_gridmap
+target_link_libraries(image_publisher
  ${catkin_LIBRARIES}
 )

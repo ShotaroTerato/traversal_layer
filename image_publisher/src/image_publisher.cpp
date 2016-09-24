@@ -13,7 +13,7 @@ int main(int argc, char** argv)
   ros::NodeHandle nh;
 
   ros::Time start_time = ros::Time::now();
-  ros::Duration timeout(2.0);
+  ros::Duration timeout(60.0);
 
   cv::Mat cv_image;
   //cv_image = cv::imread("/home/tera/catkin_ws/src/traversal_layer/maps/mymap_for_costmap.png",CV_LOAD_IMAGE_COLOR);

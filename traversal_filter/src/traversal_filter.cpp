@@ -36,14 +36,14 @@ private:
     pcl::fromROSMsg(cloud_in, *pcl_cloud_in);
 
     pcl::PassThrough<pcl::PointXYZ> z_pass;
-//    z_pass.setInputCloud(pcl_cloud_in);
-//    z_pass.setFilterFieldName("z");
-//    z_pass.setFilterLimits(-1.0, -0.03);
-//    z_pass.filter(*pcl_cloud_out);
+    z_pass.setInputCloud(pcl_cloud_in);
+    z_pass.setFilterFieldName("z");
+    z_pass.setFilterLimits(-1.0, -0.03);
+    z_pass.filter(*pcl_cloud_out);
 
-//    pcl::toROSMsg(*pcl_cloud_out, cloud_out);
-//
-//    pub.publish(cloud_out);
+    pcl::toROSMsg(*pcl_cloud_out, cloud_out);
+
+    pub.publish(cloud_out);
   }
 };
 

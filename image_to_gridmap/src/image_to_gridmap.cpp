@@ -7,7 +7,7 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "image_to_gridmap");
   ros::NodeHandle nh("~");
   ros::Time start_time = ros::Time::now();
-  ros::Duration timeout(5.0);
+  ros::Duration timeout(100.0);
   ros::Rate loop_rate(10);
 
   while(ros::Time::now() - start_time < timeout)
@@ -16,5 +16,6 @@ int main(int argc, char** argv)
     loop_rate.sleep();
   }
 
+//  ros::spin();
   return 0;
 }

@@ -19,7 +19,7 @@ ImageToGridmap::~ImageToGridmap()
 
 bool ImageToGridmap::readParameters()
 {
-  nodeHandle_.param("image_topic", imageTopic_, std::string("/image"));
+  nodeHandle_.param("image_topic", imageTopic_, std::string("/map_image"));
   nodeHandle_.param("resolution", resolution_, 0.03);
   nodeHandle_.param("min_height", minHeight_, 0.0);
   nodeHandle_.param("max_height", maxHeight_, 1.0);
