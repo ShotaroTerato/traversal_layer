@@ -2,6 +2,7 @@
 
 <launch>
 
+  <node pkg="shutdown_node" type="shutdown_node" name="shutdown_node" required="true" output="screen" />
   <node pkg="image_publisher" type="image_publisher" name="image_publisher"/>
   <rosparam command="load" file="$(find image_to_gridmap)/config/image_to_gridmap.yaml" />
   <node pkg="grid_map_demos" type="image_to_gridmap_demo" name="image_to_gridmap_demo" output="screen" />

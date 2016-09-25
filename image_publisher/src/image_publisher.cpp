@@ -42,7 +42,7 @@ int main(int argc, char** argv)
   ros_image.header.frame_id = "/map";
 
   ros::Publisher pub = nh.advertise<sensor_msgs::Image>("/map_image", 1);
-  ros::Rate loop_rate(10);
+  ros::Rate loop_rate(1);
 
   while(ros::Time::now() - start_time < timeout)
   {
