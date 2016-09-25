@@ -3,32 +3,25 @@
 #include <sensor_msgs/PointCloud2.h>
 #include <sensor_msgs/PointCloud.h>
 #include <sensor_msgs/point_cloud_conversion.h>
-
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/point_cloud.h>
 #include <pcl/point_types.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl/PCLPointCloud2.h>
-#include <pcl/features/normal_3d.h>
-#include <pcl/filters/voxel_grid.h>
 #include <pcl/filters/passthrough.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl_ros/transforms.h>
 
-#include <tf/transform_listener.h>
-#include <tf/transform_broadcaster.h>
-
-class Filter{
+class TraversalFilter{
 public:
-  Filter(){
-  point_cloud_sub = nh.subscribe("/grid_map_visualization/elevation_points", 1, &Filter::filterCallBack, this);
+  TraversalFilter(){
+  pointcloud_sub = nh.subscribe("/grid_map_visualization/elevation_points", 1, &TraversalFilter::filterCallBack, this);
   pub = nh.advertise<sensor_msgs::PointCloud2> ("/untraversal_cloud", 400, 1);
-  ros::Rate loop_rate(10);
 }
 
 private:
   ros::NodeHandle nh;
-  ros::Subscriber point_cloud_sub;
+  ros::Subscriber pointcloud_sub;
   ros::Publisher pub;
   sensor_msgs::PointCloud2 cloud_in;
   sensor_msgs::PointCloud2 cloud_out;
@@ -56,8 +49,8 @@ private:
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "Filter");
-  Filter filter;
+  ros::init(argc, argv, "TraversalFilter");
+  TraversalFilter filter;
   filter;
 
   ros::spin();

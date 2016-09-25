@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 
 <launch>
-  <node pkg="traversal_layer" type="image_publisher" name="image_publisher"/>
 
-  <rosparam command="load" file="$(find traversal_layer)/config/image_to_gridmap_demo.yaml" />
+  <node pkg="shutdown_node" type="shutdown_node" name="shutdown_node" required="true" output="screen" />
+  <node pkg="image_publisher" type="image_publisher" name="image_publisher"/>
+  <rosparam command="load" file="$(find image_to_gridmap)/config/image_to_gridmap.yaml" />
   <node pkg="grid_map_demos" type="image_to_gridmap_demo" name="image_to_gridmap_demo" output="screen" />
   <!-- Launch the grid map visualizer -->
   <node pkg="grid_map_visualization" type="grid_map_visualization" name="grid_map_visualization" output="screen" />
 
-  <node pkg="traversal_layer" type="traversal_layer" name="traversal_layer"/>
+  <node pkg="traversal_filter" type="traversal_filter" name="traversal_filter"/>
 
   <node pkg="octomap_server" type="octomap_server_node" name="octomap" output="screen">
-    <param name="resolution" value="0.05"/>
+    <param name="resolution" value="0.1"/>
     <param name="frame_id" value="/map"/>
     <param name="base_frame_id" value="/base_link"/>
     <remap from="/cloud_in" to="/untraversal_cloud"/>

@@ -71,7 +71,10 @@ private:
     pcl_cloud_xyzrgb->points.resize(pcl_cloud_xyzi->points.size());
     for(int j=0; j<pcl_cloud_xyzi->points.size(); j++){
       int normalize_num = max - floor((range/i_range) * pcl_cloud_xyzi->points[j].intensity);
-      pcl_cloud_xyzrgb->points[j].x = pcl_cloud_xyzi->points[j].x; pcl_cloud_xyzrgb->points[j].y = pcl_cloud_xyzi->points[j].y; pcl_cloud_xyzrgb->points[j].z = pcl_cloud_xyzi->points[j].z; pcl_cloud_xyzrgb->points[j].r = normalize_num;
+      pcl_cloud_xyzrgb->points[j].x = pcl_cloud_xyzi->points[j].x;
+      pcl_cloud_xyzrgb->points[j].y = pcl_cloud_xyzi->points[j].y;
+      pcl_cloud_xyzrgb->points[j].z = pcl_cloud_xyzi->points[j].z;
+      pcl_cloud_xyzrgb->points[j].r = normalize_num;
       pcl_cloud_xyzrgb->points[j].g = normalize_num;
       pcl_cloud_xyzrgb->points[j].b = normalize_num;
     }
