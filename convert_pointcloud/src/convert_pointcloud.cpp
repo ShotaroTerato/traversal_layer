@@ -51,26 +51,27 @@ private:
 
     pcl::fromROSMsg(cloud_in, *pcl_cloud_xyzi);
 
-    float i_max = 1.0;
+    float i_max = 0.5;
     float i_min = 0.0;
     int max = 255;
     int min = 0;
 
     for(int i=0; i<pcl_cloud_xyzi->points.size(); i++){
-      if(pcl_cloud_xyzi->points[i].intensity>=i_max){
-        pcl_cloud_xyzi->points[i].intensity = 1.0;
+      if(pcl_cloud_xyzi->points[i].intensity >= i_max){
+        pcl_cloud_xyzi->points[i].intensity = i_max;
       }
-      if(pcl_cloud_xyzi->points[i].intensity<=i_min){
+      if(pcl_cloud_xyzi->points[i].intensity <= i_min){
         pcl_cloud_xyzi->points[i].intensity = 0.0;
       }
     }
     ROS_INFO("max intensity = %f, \n min intensity = %f", i_max, i_min);
-    int i_range = abs(i_max - i_min);
+    float i_range = i_max - i_min;
+    ROS_INFO("i_range = %f \n", i_range);
     int range = abs(max - min);
 
     pcl_cloud_xyzrgb->points.resize(pcl_cloud_xyzi->points.size());
     for(int j=0; j<pcl_cloud_xyzi->points.size(); j++){
-      int normalize_num = max - floor((range/i_range) * pcl_cloud_xyzi->points[j].intensity);
+      int normalize_num = floor(255 - (255 * pcl_cloud_xyzi->points[j].intensity)/0.5);
       pcl_cloud_xyzrgb->points[j].x = pcl_cloud_xyzi->points[j].x;
       pcl_cloud_xyzrgb->points[j].y = pcl_cloud_xyzi->points[j].y;
       pcl_cloud_xyzrgb->points[j].z = pcl_cloud_xyzi->points[j].z;
@@ -79,8 +80,8 @@ private:
       pcl_cloud_xyzrgb->points[j].b = normalize_num;
     }
 
-    pcl_cloud_xyzrgb->height = 1984;
-    pcl_cloud_xyzrgb->width = 1984;
+    pcl_cloud_xyzrgb->height = 4000;
+    pcl_cloud_xyzrgb->width = 4000;
     cv::Mat cloud_image;
     cloud_image = cv::Mat(pcl_cloud_xyzrgb->height, pcl_cloud_xyzrgb->width, CV_8UC3);
     ROS_INFO("height = %d, width = %d", pcl_cloud_xyzrgb->height, pcl_cloud_xyzrgb->width);
